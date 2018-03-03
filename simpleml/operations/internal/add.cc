@@ -9,8 +9,9 @@ Tensor AddOperation::Compute() const {
   return lhs + rhs;
 }
 
-OperationPtr AddOperation::GetBackProp(const OperationPtr& input,
-                                       const OperationPtr& gradient) const {
+std::unique_ptr<Operation> AddOperation::GetBackProp(
+    const std::shared_ptr<Variable>& input,
+    const std::shared_ptr<Variable>& gradient) const {
   assert(input.get() == inputs_[0].get() || input.get() == inputs_[1].get());
   return gradient;
 }

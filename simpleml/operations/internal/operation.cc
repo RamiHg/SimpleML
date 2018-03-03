@@ -1,5 +1,8 @@
 #include "simpleml/operations/internal/operation.h"
 
+// tODO Remove me
+#include "simpleml/variable.h"
+
 namespace SimpleML {
 Operation::Operation(const InputVector& inputs) : inputs_(inputs) {}
 

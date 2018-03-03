@@ -11,8 +11,9 @@ Tensor MulOperation::Compute() const {
   return lhs + rhs;
 }
 
-OperationPtr MulOperation::GetBackProp(const OperationPtr& input,
-                                       const OperationPtr& gradient) const {
+virtual std::unique_ptr<Operation> MulOperation::GetBackProp(
+    const std::shared_ptr<Variable>& input,
+    const std::shared_ptr<Variable>& gradient) const {
   assert(input == inputs_[0] || input == inputs_[1]);
   // AB
   if (input == inputs_[0]) {
