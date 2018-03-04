@@ -2,11 +2,15 @@ cc_library(
     name = "simpleml",
     srcs = glob([
         "simpleml/operations/internal/*.cc",
-    ]),
-    hdrs = 
-        glob(["simpleml/operations/internal/*.h"]) +
+        ]) +
         [
-            "simpleml/variable.h",
+            "simpleml/operations/operations.cc",
+        ],
+    hdrs = 
+        glob([
+            "simpleml/operations/internal/*.h",
+            "simpleml/*.h"]) +
+        [
             "simpleml/math/tensor.h",
             "simpleml/operations/operations.h"
         ],
