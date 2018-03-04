@@ -28,3 +28,14 @@ cc_binary(
     ],
     copts = ["-std=c++14"],
 )
+
+cc_test (
+    name = "test",
+    srcs = [
+        "simpleml/test/operations_test.cc",
+    ],
+    deps = [
+        ":simpleml",
+        "deps/googletest:gtest",
+    ]
+)
