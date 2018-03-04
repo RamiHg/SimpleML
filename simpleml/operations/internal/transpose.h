@@ -4,15 +4,14 @@
 #include <memory>
 
 #include "simpleml/operations/internal/operation.h"
+#include "simpleml/variable.h"
 
 namespace SimpleML {
 class TransposeOperation : public Operation {
  public:
-  TransposeOperation(const VariableList& inputs) : Operation(inputs) {
-    assert(inputs.size() == 1);
-  }
+  TransposeOperation(const VariableSPtr& input) : Operation({input}) {}
 
-  virtual Tensor Compute() const override { return xt::transpose(value_); }
+  virtual Tensor Compute() const override;
   virtual std::unique_ptr<Operation> GetBackProp(
       const std::shared_ptr<VariableNode>& input,
       const std::shared_ptr<VariableNode>& gradient) const override {

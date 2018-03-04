@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-//#include <string_view>
 #include <string>
+#include <string_view>
 
 #include "simpleml/math/tensor.h"
 
@@ -18,7 +18,7 @@ typedef std::shared_ptr<VariableNode> VariableSPtr;
 class VariableNode {
  public:
   // Create a Variable node from an operation that created it.
-  VariableNode(const std::string& name, std::unique_ptr<Operation> operation);
+  VariableNode(std::string_view name, std::unique_ptr<Operation> operation);
 
   const Tensor& GetValue() const { return value_; }
   const Operation& GetOperation() const { return *operation_; }
