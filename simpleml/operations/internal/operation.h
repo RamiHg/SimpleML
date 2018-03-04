@@ -21,8 +21,8 @@ class Operation {
   virtual Tensor Compute() const = 0;
   // Returns the operation to compute gradient with respect to a specific input.
   virtual std::unique_ptr<Operation> GetBackProp(
-      const std::shared_ptr<Variable>& input,
-      const std::shared_ptr<Variable>& gradient) const = 0;
+      const std::shared_ptr<VariableNode>& input,
+      const std::shared_ptr<VariableNode>& gradient) const = 0;
 
  protected:
   const Tensor& GetInputValue(size_t child_index) const;

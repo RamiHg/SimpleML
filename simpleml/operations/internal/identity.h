@@ -1,15 +1,15 @@
 #pragma once
 
+#include <cassert>
 #include <memory>
 
 #include "simpleml/operations/internal/operation.h"
 #include "simpleml/variable.h"
 
 namespace SimpleML {
-class AddOperation : public Operation {
+class IdentityOperation : public Operation {
  public:
-  AddOperation(const VariableSPtr& lhs, const VariableSPtr& rhs)
-      : Operation({lhs, rhs}) {}
+  IdentityOperation(const VariableSPtr& input) : Operation({input}) {}
 
   virtual Tensor Compute() const override;
   virtual std::unique_ptr<Operation> GetBackProp(

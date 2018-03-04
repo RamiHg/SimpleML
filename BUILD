@@ -6,6 +6,7 @@ cc_library(
     hdrs = 
         glob(["simpleml/operations/internal/*.h"]) +
         [
+            "simpleml/variable.h",
             "simpleml/math/tensor.h",
             "simpleml/operations/operations.h"
         ],

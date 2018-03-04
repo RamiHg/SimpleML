@@ -11,17 +11,19 @@ Tensor MulOperation::Compute() const {
   return lhs + rhs;
 }
 
-virtual std::unique_ptr<Operation> MulOperation::GetBackProp(
-    const std::shared_ptr<Variable>& input,
-    const std::shared_ptr<Variable>& gradient) const {
+std::unique_ptr<Operation> MulOperation::GetBackProp(
+    const std::shared_ptr<VariableNode>& input,
+    const std::shared_ptr<VariableNode>& gradient) const {
   assert(input == inputs_[0] || input == inputs_[1]);
   // AB
   if (input == inputs_[0]) {
     // d(AB) / dA * G = BGT
-    return Operations::Mul(inputs_[1], Operations::Transpose(gradient));
+    return std::make_unique<MulOperation>(inputs_[1],
+                                          Operations::Transpose(gradient));
   } else {
     // d(AB) / dA * G = ATG
-    return Operations::Mul(Operations::Transpose(inputs_[0]), gradient);
+    return std::make_unique<MulOperation>(Operations::Transpose(inputs_[0]),
+                                          gradient);
   }
 }
 }  // namespace SimpleML

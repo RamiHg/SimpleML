@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include "simpleml/operations/internal/identity.h"
+
 namespace SimpleML {
 Tensor AddOperation::Compute() const {
   const auto& lhs = GetInputValue(0);
@@ -10,9 +12,9 @@ Tensor AddOperation::Compute() const {
 }
 
 std::unique_ptr<Operation> AddOperation::GetBackProp(
-    const std::shared_ptr<Variable>& input,
-    const std::shared_ptr<Variable>& gradient) const {
+    const std::shared_ptr<VariableNode>& input,
+    const std::shared_ptr<VariableNode>& gradient) const {
   assert(input.get() == inputs_[0].get() || input.get() == inputs_[1].get());
-  return gradient;
+  return std::make_unique<IdentityOperation>(gradient);
 }
 }  // namespace SimpleML

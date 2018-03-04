@@ -9,6 +9,9 @@
 namespace SimpleML {
 
 class Operation;
+class VariableNode;
+
+typedef std::shared_ptr<VariableNode> VariableSPtr;
 
 // A variable is not meant to be created directly. Please use SimpleML::Variable
 // to create it.

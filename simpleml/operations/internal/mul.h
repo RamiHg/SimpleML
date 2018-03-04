@@ -3,15 +3,17 @@
 #include <memory>
 
 #include "simpleml/operations/internal/operation.h"
+#include "simpleml/variable.h"
 
 namespace SimpleML {
 class MulOperation : public Operation {
  public:
-  MulOperation(const VariableList& inputs) : Operation(inputs) {}
+  MulOperation(const VariableSPtr& lhs, const VariableSPtr& rhs)
+      : Operation({lhs, rhs}) {}
 
   virtual Tensor Compute() const override;
   virtual std::unique_ptr<Operation> GetBackProp(
-      const std::shared_ptr<Variable>& input,
-      const std::shared_ptr<Variable>& gradient) const override;
+      const std::shared_ptr<VariableNode>& input,
+      const std::shared_ptr<VariableNode>& gradient) const override;
 };
 }  // namespace SimpleML

@@ -14,8 +14,8 @@ class TransposeOperation : public Operation {
 
   virtual Tensor Compute() const override { return xt::transpose(value_); }
   virtual std::unique_ptr<Operation> GetBackProp(
-      const std::shared_ptr<Variable>& input,
-      const std::shared_ptr<Variable>& gradient) const override {
+      const std::shared_ptr<VariableNode>& input,
+      const std::shared_ptr<VariableNode>& gradient) const override {
     assert(false && "TODO: Implement backprop operation.");
   }
 };
