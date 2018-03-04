@@ -1,3 +1,13 @@
+config_setting(
+    name = "windows",
+    values = { "cpu": "x64_windows" },
+)
+
+config_setting(
+    name = "macos",
+    values = {"cpu": "x64_macos" },
+)
+
 cc_library(
     name = "simpleml",
     srcs = glob([
@@ -17,11 +27,16 @@ cc_library(
     deps = [
         "//deps/xtensor:xtensor"
     ],
-    copts = [
-        "-std=c++14",
-        # "-Wall",
-        # "-Werror",
-    ],
+    copts = select(
+        {
+            ":windows": [],
+            "//conditions:default": 
+            [
+                "-std=c++14",
+                # "-Wall",
+                # "-Werror",
+            ]
+        }),
 )
 
 cc_binary(
@@ -40,6 +55,6 @@ cc_test (
     ],
     deps = [
         ":simpleml",
-        "deps/googletest:gtest",
+        "@googletest//:gtest",
     ]
 )

@@ -11,6 +11,8 @@ class Graph {
  public:
   static Graph& Get();
 
+  void Reset();
+
   void AddNode(const std::shared_ptr<VariableNode>& node);
   int GetNumNodes() const { return num_nodes_; }
 
