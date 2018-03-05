@@ -21,6 +21,8 @@ class VariableNode {
   // Create a Variable node from an operation that created it.
   VariableNode(std::string_view name, std::unique_ptr<Operation> operation);
 
+  const std::string& GetName() const { return name_; }
+
   void AddDescendant(VariableNode* descendant);
   const std::unordered_set<VariableNode*>& GetDescendants() const {
     return descendants_;

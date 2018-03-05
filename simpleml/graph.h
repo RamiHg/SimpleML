@@ -4,6 +4,8 @@
 #include <list>
 #include <memory>
 
+#include "simpleml/variable.h"
+
 namespace SimpleML {
 
 class VariableNode;
@@ -13,6 +15,7 @@ class Graph {
   static Graph& Get() { return s_graph; }
 
   void ForwardPropagate();
+  void BuildBackwardPropagation(const VariableSPtr& input);
   void Reset();
 
   void AddNode(const std::shared_ptr<VariableNode>& node);
