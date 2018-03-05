@@ -12,10 +12,9 @@ cc_library(
     name = "simpleml",
     srcs = glob([
         "simpleml/operations/internal/*.cc",
-        ]) +
-        [
-            "simpleml/operations/operations.cc",
-        ],
+        "simpleml/operations/*.cc",
+        "simpleml/*.cc",
+        ]),
     hdrs = 
         glob([
             "simpleml/operations/internal/*.h",
@@ -29,7 +28,9 @@ cc_library(
     ],
     copts = select(
         {
-            ":windows": [],
+            ":windows": [
+                "/std:c++17",
+            ],
             "//conditions:default": 
             [
                 "-std=c++14",
@@ -45,16 +46,40 @@ cc_binary(
     deps = [
         ":simpleml"
     ],
-    copts = ["-std=c++14"],
+    copts = select(
+        {
+            ":windows": [
+                "/std:c++17",
+            ],
+            "//conditions:default": 
+            [
+                "-std=c++14",
+                # "-Wall",
+                # "-Werror",
+            ]
+        }),
 )
 
 cc_test (
     name = "test",
     srcs = [
         "simpleml/test/operations_test.cc",
+        "simpleml/test/test_main.cc",
     ],
     deps = [
         ":simpleml",
         "@googletest//:gtest",
-    ]
+    ],
+    copts = select(
+    {
+        ":windows": [
+            "/std:c++17",
+        ],
+        "//conditions:default": 
+        [
+            "-std=c++14",
+            # "-Wall",
+            # "-Werror",
+        ]
+    }),
 )

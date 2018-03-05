@@ -24,6 +24,8 @@ class Operation {
       const std::shared_ptr<VariableNode>& input,
       const std::shared_ptr<VariableNode>& gradient) const = 0;
 
+  const VariableList& GetInputs() const { return inputs_; }
+
  protected:
   const Tensor& GetInputValue(size_t child_index) const;
 

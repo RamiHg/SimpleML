@@ -20,12 +20,19 @@ class VariableNode {
   // Create a Variable node from an operation that created it.
   VariableNode(std::string_view name, std::unique_ptr<Operation> operation);
 
+  void AddDescendant(VariableNode* descendant);
+  const std::vector<VariableNode*>& GetDescendants() const {
+    return descendants_;
+  }
+
+  void SetValue(const Tensor& value) { value_ = value; }
   const Tensor& GetValue() const { return value_; }
   const Operation& GetOperation() const { return *operation_; }
 
  private:
   const std::string name_;
   std::unique_ptr<Operation> operation_;
+  std::vector<VariableNode*> descendants_;
   Tensor value_;
 };
 
