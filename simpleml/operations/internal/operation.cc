@@ -1,6 +1,6 @@
 #include "simpleml/operations/internal/operation.h"
 
-// tODO Remove me
+// TODO: Remove me
 #include "simpleml/variable.h"
 
 namespace SimpleML {

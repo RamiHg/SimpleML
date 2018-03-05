@@ -2,6 +2,8 @@
 
 #include "simpleml/operations/internal/operation.h"
 
+#include <algorithm>
+
 namespace SimpleML {
 
 VariableNode::VariableNode(std::string_view name,
@@ -16,7 +18,7 @@ VariableNode::VariableNode(std::string_view name,
 }
 
 void VariableNode::AddDescendant(VariableNode* descendant) {
-  descendants_.push_back(descendant);
+  descendants_.insert(descendant);
 }
 
 }  // namespace SimpleML

@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <unordered_set>
 
 #include "simpleml/math/tensor.h"
 
@@ -21,7 +22,7 @@ class VariableNode {
   VariableNode(std::string_view name, std::unique_ptr<Operation> operation);
 
   void AddDescendant(VariableNode* descendant);
-  const std::vector<VariableNode*>& GetDescendants() const {
+  const std::unordered_set<VariableNode*>& GetDescendants() const {
     return descendants_;
   }
 
@@ -32,7 +33,7 @@ class VariableNode {
  private:
   const std::string name_;
   std::unique_ptr<Operation> operation_;
-  std::vector<VariableNode*> descendants_;
+  std::unordered_set<VariableNode*> descendants_;
   Tensor value_;
 };
 
