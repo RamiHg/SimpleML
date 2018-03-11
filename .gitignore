@@ -36,3 +36,9 @@ bazel-*
 
 # VS Code project files
 .vscode/
+
+# Xcode stuff
+builddir/
+*.xcodeproj
+
+.DS_Store

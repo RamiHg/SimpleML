@@ -13,48 +13,42 @@
 namespace SimpleML {
 namespace Operations {
 
-static std::string NameOpVariable(std::string_view op_name) {
+static std::string NameOpVariable(std::string_view op_name, Graph& graph) {
   std::stringstream name_stream;
-  name_stream << op_name << "_" << Graph::Get().GetNumNodes();
+  name_stream << op_name << "_" << graph.GetNumNodes();
   return name_stream.str();
 }
 
-VariableSPtr Add(const VariableSPtr& lhs, const VariableSPtr& rhs,
-                 std::string_view name) {
+VariableNode* Add(const VariableNode* lhs, const VariableNode* rhs,
+                  std::string_view name, Graph& graph) {
   const std::string final_name =
-      name.empty() ? std::string(name) : NameOpVariable("add");
-  auto variable = std::make_shared<VariableNode>(
-      final_name, std::make_unique<AddOperation>(lhs, rhs));
-  Graph::Get().AddNode(variable);
-  return variable;
+      !name.empty() ? std::string(name) : NameOpVariable("add", graph);
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<AddOperation>(lhs, rhs));
 }
 
-VariableSPtr Mul(const VariableSPtr& lhs, const VariableSPtr& rhs,
-                 std::string_view name) {
+VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
+                  std::string_view name, Graph& graph) {
   const std::string final_name =
-      name.empty() ? std::string(name) : NameOpVariable("mul");
-  auto variable = std::make_shared<VariableNode>(
-      final_name, std::make_unique<MulOperation>(lhs, rhs));
-  Graph::Get().AddNode(variable);
-  return variable;
+      !name.empty() ? std::string(name) : NameOpVariable("mul", graph);
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<MulOperation>(lhs, rhs));
 }
 
-VariableSPtr Transpose(const VariableSPtr& value, std::string_view name) {
+VariableNode* Transpose(const VariableNode* value, std::string_view name,
+                        Graph& graph) {
   const std::string final_name =
-      name.empty() ? std::string(name) : NameOpVariable("transpose");
-  auto variable = std::make_shared<VariableNode>(
-      final_name, std::make_unique<TransposeOperation>(value));
-  Graph::Get().AddNode(variable);
-  return variable;
+      !name.empty() ? std::string(name) : NameOpVariable("transpose", graph);
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<TransposeOperation>(value));
 }
 
-VariableSPtr Constant(const Tensor& value, std::string_view name) {
+VariableNode* Constant(const Tensor& value, std::string_view name,
+                       Graph& graph) {
   const std::string final_name =
-      name.empty() ? std::string(name) : NameOpVariable("constant");
-  auto variable = std::make_shared<VariableNode>(
-      final_name, std::make_unique<ConstantOperation>(value));
-  Graph::Get().AddNode(variable);
-  return variable;
+      !name.empty() ? std::string(name) : NameOpVariable("constant", graph);
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<ConstantOperation>(value));
 }
 
 }  // namespace Operations

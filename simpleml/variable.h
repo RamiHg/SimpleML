@@ -23,11 +23,6 @@ class VariableNode {
 
   const std::string& GetName() const { return name_; }
 
-  void AddDescendant(VariableNode* descendant);
-  const std::unordered_set<VariableNode*>& GetDescendants() const {
-    return descendants_;
-  }
-
   void SetValue(const Tensor& value) { value_ = value; }
   const Tensor& GetValue() const { return value_; }
   const Operation& GetOperation() const { return *operation_; }
@@ -35,7 +30,6 @@ class VariableNode {
  private:
   const std::string name_;
   std::unique_ptr<Operation> operation_;
-  std::unordered_set<VariableNode*> descendants_;
   Tensor value_;
 };
 

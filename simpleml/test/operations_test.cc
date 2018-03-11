@@ -1,6 +1,9 @@
 #include "gtest/gtest.h"
 
+#include "simpleml/back_prop.h"
+#include "simpleml/forward_prop.h"
 #include "simpleml/graph.h"
+#include "simpleml/graph_vis.h"
 #include "simpleml/operations/operations.h"
 #include "simpleml/variable.h"
 
@@ -10,33 +13,38 @@ using namespace Operations;
 
 class OperationsTest : public testing::Test {
  public:
-  void SetUp() override { Graph::Get().Reset(); }
+  OperationsTest() { Graph::GetDefaultGraph().Reset(); }
 };
 
-TEST(OperationsTest, TestConstant) {
+TEST_F(OperationsTest, TestConstant) {
   auto test = Tensor{1., 2., 3.};
-  VariableSPtr var = Constant(test);
-  Graph::Get().ForwardPropagate();
+  auto var = Constant(test);
+  ForwardPropagate(Graph::GetDefaultGraph());
   EXPECT_EQ(var->GetValue(), test);
 }
 
-TEST(OperationsTest, TestAdd) {
-  VariableSPtr a = Constant(Tensor{1., 2., 3.});
-  VariableSPtr b = Constant(Tensor{4., 5., 6.});
-  VariableSPtr c = Add(a, b);
-  VariableSPtr d = Add(c, c);
-  Graph::Get().ForwardPropagate();
+TEST_F(OperationsTest, TestAdd) {
+  auto a = Constant(Tensor{1., 2., 3.});
+  auto b = Constant(Tensor{4., 5., 6.});
+  auto c = Add(a, b);
+  auto d = Add(c, c);
+  ForwardPropagate(Graph::GetDefaultGraph());
   auto result = Tensor{5., 7., 9.};
   EXPECT_EQ(c->GetValue(), result);
   result = result + result;
   EXPECT_EQ(d->GetValue(), result);
 }
 
-TEST(OperationsTest, TestAddBackprop) {
-  VariableSPtr a = Constant(Tensor{1., 2., 3.});
-  VariableSPtr b = Constant(Tensor{4., 5., 6.});
-  VariableSPtr c = Add(a, b);
-  Graph::Get().BuildBackwardPropagation(c);
+TEST_F(OperationsTest, TestAddBackprop) {
+  int x;
+  printf("It's %d\n", x);
+  auto a = Constant(Tensor{1., 2., 3.});
+  auto b = Constant(Tensor{4., 5., 6.});
+  auto c = Mul(a, b);
+  auto d = Mul(c, a);
+  auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), d);
+  SerializeGraphToDotFile(*back_prop_graph, "/tmp/testbackprop.dot");
+  ForwardPropagate(*back_prop_graph);
 }
 
 }  // namespace SimpleML

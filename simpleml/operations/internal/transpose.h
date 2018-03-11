@@ -5,16 +5,19 @@
 
 #include "simpleml/operations/internal/operation.h"
 #include "simpleml/variable.h"
+#include "xtensor/xstrided_view.hpp"
 
 namespace SimpleML {
 class TransposeOperation : public Operation {
  public:
-  TransposeOperation(const VariableSPtr& input) : Operation({input}) {}
+  TransposeOperation(const VariableNode* input) : Operation({input}) {}
+  virtual const char* GetName() const { return "Transpose"; }
 
-  virtual Tensor Compute() const override;
-  virtual std::unique_ptr<Operation> GetBackProp(
-      const std::shared_ptr<VariableNode>& input,
-      const std::shared_ptr<VariableNode>& gradient) const override {
+  virtual Tensor Compute() const override {
+    return xt::transpose(GetInputValue(0));
+  }
+  virtual std::unique_ptr<Operation> GetBackProp(Graph&,
+      const VariableNode* input, const VariableNode* gradient) const override {
     assert(false && "TODO: Implement backprop operation.");
     return nullptr;
   }

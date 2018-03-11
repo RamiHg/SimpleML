@@ -9,7 +9,7 @@ class VariableOperation : public Operation {
   VariableOperation(const VariableSPtr& input) : Operation({input}) {}
 
   virtual Tensor Compute() const override{return GetInputValue(0)};
-  virtual std::unique_ptr<Operation> GetBackProp(
+  virtual std::unique_ptr<Operation> GetBackProp(Graph&,
       const std::shared_ptr<VariableNode>& input,
       const std::shared_ptr<VariableNode>& gradient) const override {
     assert(false && "Figure out what to put here.");

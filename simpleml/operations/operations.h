@@ -3,22 +3,29 @@
 #include <memory>
 #include <string_view>
 
+#include "simpleml/graph.h"
 #include "simpleml/operations/internal/operation.h"
 #include "simpleml/variable.h"
 
 namespace SimpleML {
 namespace Operations {
-VariableSPtr Add(const VariableSPtr& lhs, const VariableSPtr& rhs,
-                 std::string_view name = std::string_view());
-VariableSPtr Mul(const VariableSPtr& lhs, const VariableSPtr& rhs,
-                 std::string_view name = std::string_view());
-VariableSPtr Transpose(const VariableSPtr& value,
-                       std::string_view name = std::string_view());
-VariableSPtr Identity(const VariableSPtr& value,
-                      std::string_view name = std::string_view());
-VariableSPtr Variable(const Tensor& value,
-                      std::string_view name = std::string_view());
-VariableSPtr Constant(const Tensor& value,
-                      std::string_view name = std::string_view());
+VariableNode* Add(const VariableNode* lhs, const VariableNode* rhs,
+                  std::string_view name = std::string_view(),
+                  Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
+                  std::string_view name = std::string_view(),
+                  Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Transpose(const VariableNode* value,
+                        std::string_view name = std::string_view(),
+                        Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Identity(const VariableNode* value,
+                       std::string_view name = std::string_view(),
+                       Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Variable(const Tensor& value,
+                       std::string_view name = std::string_view(),
+                       Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Constant(const Tensor& value,
+                       std::string_view name = std::string_view(),
+                       Graph& graph = Graph::GetDefaultGraph());
 }  // namespace Operations
 }  // namespace SimpleML

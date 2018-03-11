@@ -8,21 +8,23 @@
 namespace SimpleML {
 
 class VariableNode;
+class Graph;
 // Base class for operations.
 // Defines something that can be done and taken a gradient of.
 class Operation {
  public:
-  using VariableList = std::vector<std::shared_ptr<VariableNode>>;
+  using VariableList = std::vector<const VariableNode*>;
 
   Operation(const VariableList& inputs);
   virtual ~Operation() {}
+  virtual const char* GetName() const { return "GenericOperation"; }
   // Computes the value of the operation based on its inputs and returns the
   //  value.
   virtual Tensor Compute() const = 0;
   // Returns the operation to compute gradient with respect to a specific input.
   virtual std::unique_ptr<Operation> GetBackProp(
-      const std::shared_ptr<VariableNode>& input,
-      const std::shared_ptr<VariableNode>& gradient) const = 0;
+      Graph& graph,
+      const VariableNode* input, const VariableNode* gradient) const = 0;
 
   const VariableList& GetInputs() const { return inputs_; }
 
