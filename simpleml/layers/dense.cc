@@ -23,7 +23,7 @@ VariableNode* DenseLayer(VariableNode* input, int width, Graph& graph,
   // TODO: Initialize.
   Tensor::shape_type weight_shape = {(uint32_t)width, (uint32_t)input_size};
   VariableNode* weight_matrix = Operations::Constant(
-      Tensor{weight_shape, 0.}, final_name + "_weight", graph);
+      Tensor{weight_shape, 1.}, final_name + "_weight", graph);
 
   // The bias is of size [width, 1]
   Tensor::shape_type bias_shape = {(uint32_t)width};

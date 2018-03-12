@@ -81,7 +81,6 @@ TEST_F(OperationsTest, TestMatMul) {
   EXPECT_EQ(c->GetValue(), result);
 }
 
-
 TEST_F(OperationsTest, TestAddBackprop) {
   auto a = Constant(Tensor{1., 2., 3.});
   auto b = Constant(Tensor{4., 5., 6.});

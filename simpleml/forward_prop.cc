@@ -20,26 +20,56 @@ static std::deque<VariableNode*> GetGraphInputs(
   return inputs;
 }
 
+// DFS to do topological sorting as described in
+// https://en.wikipedia.org/wiki/Topological_sorting
+static void VisitNode(VariableNode* node,
+                      std::unordered_set<VariableNode*>& unmarked_nodes,
+                      const AdjacencyMap& descendants_map,
+                      std::deque<VariableNode*>& sorted_nodes,
+                      std::unordered_set<VariableNode*>& perm_marks,
+                      std::unordered_set<VariableNode*>& temp_marks) {
+  if (perm_marks.count(node)) return;
+  assert(temp_marks.count(node) == 0);  // not a dag.
+  temp_marks.insert(node);
+  if (descendants_map.count(node) > 0) {
+    for (auto descendant : descendants_map.at(node)) {
+      VisitNode(descendant, unmarked_nodes, descendants_map, sorted_nodes,
+                perm_marks, temp_marks);
+    }
+  }
+  perm_marks.insert(node);
+  unmarked_nodes.erase(node);
+  sorted_nodes.push_front(node);
+}
+
 void ForwardPropagate(Graph& graph) {
   const auto& node_map = graph.GetNodes();
-  auto to_process = GetGraphInputs(node_map);
   // Get descendants of all nodes in the graph.
   AdjacencyMap descendants_map = GetNodeDescendants(graph);
 
-  // Breadth first evaluation of inputs.
-  while (!to_process.empty()) {
-    VariableNode* node = to_process.front();
-    to_process.pop_front();
+  std::unordered_set<VariableNode*> unmarked_nodes, perm_marks, temp_marks;
+  for (const auto& pair : node_map) {
+    unmarked_nodes.insert(pair.second.get());
+  }
+
+  std::deque<VariableNode*> sorted_nodes;
+
+  while (!unmarked_nodes.empty()) {
+    VariableNode* node = *unmarked_nodes.begin();
+    VisitNode(node, unmarked_nodes, descendants_map, sorted_nodes, perm_marks,
+              temp_marks);
+  }
+
+  while (!sorted_nodes.empty()) {
+    VariableNode* node = sorted_nodes.front();
+    sorted_nodes.pop_front();
 
     const Operation& operation = node->GetOperation();
     const Tensor new_value = operation.Compute();
-    // Assert that the new value matches the operation shape.
     assert(CheckShapesMatch(new_value, operation.GetResultShape()));
-    node->SetValue(new_value);  // move?
+    // Assert that the new value matches the operation shape.
 
-    const auto& descendants = descendants_map[node];
-    to_process.insert(to_process.end(), descendants.cbegin(),
-                      descendants.cend());
+    node->SetValue(new_value);  // move?
   }
 }
 }  // namespace SimpleML
