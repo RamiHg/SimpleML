@@ -7,6 +7,7 @@
 #include "simpleml/operations/internal/add.h"
 #include "simpleml/operations/internal/constant.h"
 #include "simpleml/operations/internal/gte.h"
+#include "simpleml/operations/internal/matmul.h"
 #include "simpleml/operations/internal/mul.h"
 #include "simpleml/operations/internal/relu.h"
 #include "simpleml/operations/internal/transpose.h"
@@ -28,6 +29,13 @@ VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
   const std::string final_name = GetUniqueNodeName(graph, name, "mul");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<MulOperation>(lhs, rhs));
+}
+
+VariableNode* MatMul(const VariableNode* lhs, const VariableNode* rhs,
+                     std::string_view name, Graph& graph) {
+  const std::string final_name = GetUniqueNodeName(graph, name, "mul");
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<MatMulOperation>(lhs, rhs));
 }
 
 VariableNode* Transpose(const VariableNode* value, std::string_view name,

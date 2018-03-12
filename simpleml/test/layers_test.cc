@@ -4,9 +4,9 @@
 #include "simpleml/forward_prop.h"
 #include "simpleml/graph.h"
 #include "simpleml/graph_vis.h"
+#include "simpleml/layers.h"
 #include "simpleml/operations/operations.h"
 #include "simpleml/variable.h"
-#include "simpleml/layers.h"
 
 namespace SimpleML {
 
@@ -20,7 +20,7 @@ class LayersTest : public testing::Test {
   }
 };
 
-#if 0
+#if 1
 TEST_F(LayersTest, TestDenseLayer) {
   auto input_layer = Constant({1., 2., 3., 4.});
   auto dense_layer = Layers::DenseLayer(input_layer, 3);
@@ -31,4 +31,4 @@ TEST_F(LayersTest, TestDenseLayer) {
 }
 #endif
 
-}
+}  // namespace SimpleML

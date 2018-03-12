@@ -16,6 +16,9 @@ VariableNode* Add(const VariableNode* lhs, const VariableNode* rhs,
 VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
                   std::string_view name = std::string_view(),
                   Graph& graph = Graph::GetDefaultGraph());
+VariableNode* MatMul(const VariableNode* lhs, const VariableNode* rhs,
+                     std::string_view name = std::string_view(),
+                     Graph& graph = Graph::GetDefaultGraph());
 VariableNode* Transpose(const VariableNode* value,
                         std::string_view name = std::string_view(),
                         Graph& graph = Graph::GetDefaultGraph());

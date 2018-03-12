@@ -72,15 +72,21 @@ TEST_F(OperationsTest, TestMul) {
   EXPECT_EQ(c->GetValue(), result);
 }
 
+TEST_F(OperationsTest, TestMatMul) {
+  auto a = Constant({{1., 2.}, {3., 4.}});
+  auto b = Constant({{5., 6.}, {7., 8.}});
+  auto c = MatMul(a, b);
+  ForwardPropagate(Graph::GetDefaultGraph());
+  auto result = Tensor{{19, 22}, {43, 50}};
+  EXPECT_EQ(c->GetValue(), result);
+}
+
+
 TEST_F(OperationsTest, TestAddBackprop) {
   auto a = Constant(Tensor{1., 2., 3.});
   auto b = Constant(Tensor{4., 5., 6.});
   auto c = Mul(a, b);
   auto d = ReLU(c);  // Mul(c, a);
-
-  auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), d);
-  //SerializeGraphToDotFile(*back_prop_graph, "/tmp/testbackprop.dot");
-  ForwardPropagate(*back_prop_graph);
 }
 
 }  // namespace SimpleML

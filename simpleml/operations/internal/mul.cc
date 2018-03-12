@@ -12,6 +12,7 @@ std::unique_ptr<Operation> MulOperation::GetBackProp(
     const VariableNode* gradient) const {
   assert(input == inputs_[0] || input == inputs_[1]);
   // AB
+  assert(false);  // figure out how to do this.
   if (input == inputs_[0]) {
     // d(AB) / dA * G = BGT
     return std::make_unique<MulOperation>(
@@ -48,8 +49,9 @@ Shape MulOperation::GetResultShape() const {
       }
     }
   };
-  
-  //assert(std::get<1>(get_shape_tuple(lhs_shape)) == std::get<0>(get_shape_tuple(rhs_shape)));
+
+  // assert(std::get<1>(get_shape_tuple(lhs_shape)) ==
+  // std::get<0>(get_shape_tuple(rhs_shape)));
 
   auto num_rows = std::get<0>(get_shape_tuple(lhs_shape));
   int num_cols = std::get<1>(get_shape_tuple(rhs_shape));

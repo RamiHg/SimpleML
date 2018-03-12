@@ -1,10 +1,12 @@
 #include "simpleml/operations/internal/matmul.h"
 
+#include "xtensor-blas/xlinalg.hpp"
+
 namespace SimpleML {
 Tensor MatMulOperation::Compute() const {
   const auto& lhs = GetInputValue(0);
   const auto& rhs = GetInputValue(1);
-  return lhs + rhs;
+  return xt::linalg::dot(lhs, rhs);
 }
 
 std::unique_ptr<Operation> MatMulOperation::GetBackProp(
@@ -42,14 +44,15 @@ Shape MatMulOperation::GetResultShape() const {
       // TODO: Support tensor contraction.
       assert(shape.size() <= 2);
       if (shape.size() == 1) {
-        return std::make_tuple(1, shape[0]);
+        return std::make_tuple(shape[0], 1);
       } else {
         return std::make_tuple(shape[0], shape[1]);
       }
     }
   };
-  
-  //assert(std::get<1>(get_shape_tuple(lhs_shape)) == std::get<0>(get_shape_tuple(rhs_shape)));
+
+  assert(std::get<1>(get_shape_tuple(lhs_shape)) ==
+         std::get<0>(get_shape_tuple(rhs_shape)));
 
   auto num_rows = std::get<0>(get_shape_tuple(lhs_shape));
   int num_cols = std::get<1>(get_shape_tuple(rhs_shape));

@@ -13,7 +13,7 @@ class AddOperation : public Operation {
       : Operation({lhs, rhs}) {}
 
   virtual const char* GetName() const override { return "Add"; }
-  
+
   virtual Shape GetResultShape() const override;
 
   virtual Tensor Compute() const override;

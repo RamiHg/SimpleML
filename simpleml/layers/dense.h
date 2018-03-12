@@ -8,8 +8,7 @@ namespace SimpleML {
 
 class VariableNode;
 
-namespace Layers{
-
+namespace Layers {
 
 VariableNode* DenseLayer(VariableNode* input, int width,
                          Graph& graph = Graph::GetDefaultGraph(),
