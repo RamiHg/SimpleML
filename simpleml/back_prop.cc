@@ -95,7 +95,8 @@ static VariableNode* BuildGradient(
       // propagation.
       VariableNode* gradient = graph.CreateVariableNode(
           variable->GetName() + "_" + descendant->GetName() + "_gradient",
-          descendant->GetOperation().GetBackProp(graph, variable, child_gradient));
+          descendant->GetOperation().GetBackProp(graph, variable,
+                                                 child_gradient));
 
       partial_gradients.push_back(gradient);
     }
@@ -139,7 +140,7 @@ std::unique_ptr<Graph> CreateBackpropGraph(const Graph& input_graph,
   // Find descendants of need_gradients.
   auto descendants_of_need_gradients =
       GetDescendantsOf(need_gradients, descendant_map);
-  //for (auto variable : need_gradients)
+  // for (auto variable : need_gradients)
   //  descendants_of_need_gradients.insert(variable);
   // Find ancestors of input.
   auto ancestors_of_input = GetAncestorsOf(input);

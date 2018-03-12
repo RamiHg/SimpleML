@@ -13,17 +13,12 @@ class AddOperation : public Operation {
       : Operation({lhs, rhs}) {}
 
   virtual const char* GetName() const override { return "Add"; }
+  
+  virtual Shape GetResultShape() const override;
 
-  virtual Tensor Compute() const override {
-    const auto& lhs = GetInputValue(0);
-    const auto& rhs = GetInputValue(1);
-    return lhs + rhs;
-  }
+  virtual Tensor Compute() const override;
   virtual std::unique_ptr<Operation> GetBackProp(
-      Graph&,
-      const VariableNode* input, const VariableNode* gradient) const override {
-    assert(input == inputs_[0] || input == inputs_[1]);
-    return std::make_unique<IdentityOperation>(gradient);
-  }
+      Graph&, const VariableNode* input,
+      const VariableNode* gradient) const override;
 };
 }  // namespace SimpleML

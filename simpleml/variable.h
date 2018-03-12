@@ -4,6 +4,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_set>
+#include <vector>
 
 #include "simpleml/math/tensor.h"
 
@@ -30,6 +31,7 @@ class VariableNode {
  private:
   const std::string name_;
   std::unique_ptr<Operation> operation_;
+  std::vector<int> shape_;
   Tensor value_;
 };
 

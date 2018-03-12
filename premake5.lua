@@ -44,6 +44,7 @@ project "gtest"
 project "SimpleML"
     kind "StaticLib"
     language "C++"
+    warnings "Extra"
 
     files {
         "simpleml/**.h",
@@ -57,10 +58,6 @@ project "SimpleML"
     includedirs {
         "deps",
         "./"
-    }
-    
-    defines {
-        "GTEST_HAS_PTHREAD=0"
     }
 
 project "SimpleMLTest"

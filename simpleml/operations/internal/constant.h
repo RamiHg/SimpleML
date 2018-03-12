@@ -8,10 +8,12 @@ class ConstantOperation : public Operation {
  public:
   ConstantOperation(const Tensor& input) : Operation({}), value_(input) {}
 
+  Shape GetResultShape() const override { return ShapeFromS(value_.shape()); }
+
   virtual Tensor Compute() const override { return value_; }
   virtual std::unique_ptr<Operation> GetBackProp(
-    Graph&,
-      const VariableNode* input, const VariableNode* gradient) const override {
+      Graph&, const VariableNode* input,
+      const VariableNode* gradient) const override {
     assert(false && "Figure out what to put here.");
     return nullptr;
   }

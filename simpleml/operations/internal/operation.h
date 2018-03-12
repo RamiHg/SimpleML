@@ -21,10 +21,16 @@ class Operation {
   // Computes the value of the operation based on its inputs and returns the
   //  value.
   virtual Tensor Compute() const = 0;
+  // Returns the expected shape of the operation. Will return [] if the
+  // shape is completely unknown. Unknown dimension sizes will be set to -1.
+  virtual Shape GetResultShape() const { return {}; }
   // Returns the operation to compute gradient with respect to a specific input.
   virtual std::unique_ptr<Operation> GetBackProp(
-      Graph& graph,
-      const VariableNode* input, const VariableNode* gradient) const = 0;
+      Graph& graph, const VariableNode* input,
+      const VariableNode* gradient) const {
+    assert(false && "Operation is not differentiable.");
+    return nullptr;
+  }
 
   const VariableList& GetInputs() const { return inputs_; }
 
