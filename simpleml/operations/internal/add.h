@@ -14,8 +14,6 @@ class AddOperation : public Operation {
 
   virtual const char* GetName() const override { return "Add"; }
 
-  virtual Shape GetResultShape() const override;
-
   virtual Tensor Compute() const override;
   virtual std::unique_ptr<Operation> GetBackProp(
       Graph&, const VariableNode* input,
