@@ -4,8 +4,8 @@
 
 namespace SimpleML {
 Tensor MulOperation::Compute() const {
-  const auto& lhs = GetInputValue(0);
-  const auto& rhs = GetInputValue(1);
+  const auto lhs = GetInputValue(0);
+  const auto rhs = GetInputValue(1);
 
   auto lhs_shape = lhs.shape();
   auto rhs_shape = rhs.shape();

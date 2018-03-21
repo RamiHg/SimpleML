@@ -11,7 +11,7 @@ class MatMulOperation : public Operation {
  public:
   MatMulOperation(const VariableNode* lhs, const VariableNode* rhs)
       : Operation({lhs, rhs}) {}
-  virtual const char* GetName() const override { return "Mul"; }
+  virtual const char* GetName() const override { return "MatMul"; }
 
   virtual Shape GetResultShape() const override;
 

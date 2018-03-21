@@ -11,7 +11,7 @@ class MulOperation : public Operation {
  public:
   MulOperation(const VariableNode* lhs, const VariableNode* rhs)
       : Operation({lhs, rhs}) {}
-  virtual const char* GetName() const override { return "MatMul"; }
+  virtual const char* GetName() const override { return "Mul"; }
 
   virtual Tensor Compute() const override;
 

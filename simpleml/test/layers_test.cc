@@ -31,7 +31,7 @@ TEST_F(LayersTest, TestDenseLayer) {
   auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), loss);
   SerializeGraphToDotFile(*back_prop_graph, "./testbackprop.dot");
   //SerializeGraphToDotFile(Graph::GetDefaultGraph(), "/tmp/testbackprop.dot");
-  //ForwardPropagate(*back_prop_graph);
+  ForwardPropagate(*back_prop_graph);
 }
 
 }  // namespace SimpleML

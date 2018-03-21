@@ -24,9 +24,9 @@ class OperationsTest : public testing::Test {
 TEST_F(OperationsTest, TestXTensor) {
   {
     auto a = Tensor{ -1 };
-    auto b = Tensor{ {-58}, {-56} };
+    auto b = Tensor{ -58, -56 };
     auto result = b * a;
-    auto expected = Tensor{ {2, 4}, {6, 8} };
+    auto expected = Tensor{ 58, 56};
     EXPECT_EQ(result, expected);
   }
 }
