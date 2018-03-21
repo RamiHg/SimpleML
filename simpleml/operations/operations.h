@@ -41,5 +41,8 @@ VariableNode* Where(const VariableNode* cond, const VariableNode* a,
 VariableNode* ReLU(const VariableNode* value,
                    std::string_view name = std::string_view(),
                    Graph& graph = Graph::GetDefaultGraph());
+VariableNode* Pow(const VariableNode* base, const VariableNode* power,
+                  Graph& graph = Graph::GetDefaultGraph(),
+                  std::string_view name = std::string_view());
 }  // namespace Operations
 }  // namespace SimpleML

@@ -12,6 +12,7 @@
 #include "simpleml/operations/internal/relu.h"
 #include "simpleml/operations/internal/transpose.h"
 #include "simpleml/operations/internal/where.h"
+#include "simpleml/operations/internal/pow.h"
 #include "simpleml/variable.h"
 
 namespace SimpleML {
@@ -70,6 +71,13 @@ VariableNode* ReLU(const VariableNode* value, std::string_view name,
   const std::string final_name = GetUniqueNodeName(graph, name, "relu");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<ReluOperation>(value));
+}
+
+VariableNode* Pow(const VariableNode* base, const VariableNode* power,
+                  Graph& graph, std::string_view name) {
+  const std::string final_name = GetUniqueNodeName(graph, name, "pow");
+  return graph.CreateVariableNode(final_name,
+                                  std::make_unique<PowOperation>(base, power));
 }
 
 }  // namespace Operations

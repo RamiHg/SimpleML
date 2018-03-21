@@ -79,6 +79,15 @@ TEST_F(OperationsTest, TestMatMul) {
   EXPECT_EQ(c->GetValue(), result);
 }
 
+TEST_F(OperationsTest, TestPow) {
+  auto a = Constant({{1., 2.}, {3., 4.}});
+  auto b = Constant({{5., 6.}, {7., 8.}});
+  auto c = Pow(a, b);
+  ForwardPropagate(Graph::GetDefaultGraph());
+  auto result = Tensor{{1, 64}, {2187, 65536}};
+  EXPECT_EQ(c->GetValue(), result);
+}
+
 TEST_F(OperationsTest, TestAddBackprop) {
   auto a = Constant(Tensor{1., 2., 3.});
   auto b = Constant(Tensor{4., 5., 6.});

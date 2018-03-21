@@ -14,10 +14,6 @@ class ReluOperation : public Operation {
   ReluOperation(const VariableNode* input) : Operation({input}) {}
   virtual const char* GetName() const override { return "ReLU"; }
 
-  virtual Shape GetResultShape() const override {
-    return inputs_[0]->GetOperation().GetResultShape();
-  }
-
   virtual Tensor Compute() const override {
     const auto& tensor = GetInputValue(0);
     return xt::fmax(tensor, 0.);
