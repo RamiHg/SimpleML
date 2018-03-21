@@ -1,6 +1,11 @@
 #pragma once
 
+#pragma warning (push)
+#pragma warning (disable: 4996)
 #include "xtensor/xarray.hpp"
+#include "xtensor-blas/xlinalg.hpp"
+#include "xtensor/xstrided_view.hpp"
+#pragma warning (pop)
 
 namespace SimpleML {
 
@@ -18,7 +23,8 @@ inline bool SVectorsAreEqual(const xt::svector<T, N> &a,
   return true;
 }
 
-inline Shape ShapeFromS(const xt::svector<unsigned long, 4> &svector) {
+template <typename T>
+inline Shape ShapeFromS(const xt::svector<T, 4> &svector) {
   Shape ret;
   ret.reserve(svector.size());
   for (auto val : svector) ret.push_back(val);

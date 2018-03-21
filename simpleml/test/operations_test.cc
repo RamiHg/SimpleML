@@ -7,8 +7,6 @@
 #include "simpleml/operations/operations.h"
 #include "simpleml/variable.h"
 
-#include "xtensor-blas/xlinalg.hpp"
-
 namespace SimpleML {
 
 using namespace Operations;

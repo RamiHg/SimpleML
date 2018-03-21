@@ -2,6 +2,7 @@ workspace "SimpleMLWorkspace"
     configurations {"Debug", "Release"}
     basedir "builddir"
     targetdir "builddir/bin/${cfg.buildcfg}"
+    cppdialect "C++17"
 
     objdir "builddir/obj/${cfg.buildcfg}"
     

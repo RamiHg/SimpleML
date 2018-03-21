@@ -41,4 +41,7 @@ bazel-*
 builddir/
 *.xcodeproj
 
+# VS stuff
+*.vcxproj*
+
 .DS_Store

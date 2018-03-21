@@ -26,7 +26,7 @@ TEST_F(LayersTest, TestDenseLayer) {
   auto second_layer = Layers::DenseLayer(dense_layer, 2);
   ForwardPropagate(Graph::GetDefaultGraph());
   auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), dense_layer);
-  SerializeGraphToDotFile(*back_prop_graph, "/tmp/testbackprop.dot");
+  //SerializeGraphToDotFile(*back_prop_graph, "/tmp/testbackprop.dot");
   //SerializeGraphToDotFile(Graph::GetDefaultGraph(), "/tmp/testbackprop.dot");
   ForwardPropagate(*back_prop_graph);
 }

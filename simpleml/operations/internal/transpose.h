@@ -5,7 +5,6 @@
 
 #include "simpleml/operations/internal/operation.h"
 #include "simpleml/variable.h"
-#include "xtensor/xstrided_view.hpp"
 
 namespace SimpleML {
 class TransposeOperation : public Operation {
