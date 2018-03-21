@@ -1,5 +1,5 @@
 #include "simpleml/operations/internal/matmul.h"
-
+#include "xtensor-blas/xlinalg.hpp"
 
 
 namespace SimpleML {

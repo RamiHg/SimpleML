@@ -7,6 +7,7 @@
 #include "simpleml/layers.h"
 #include "simpleml/operations/operations.h"
 #include "simpleml/variable.h"
+#include "simpleml/losses.h"
 
 namespace SimpleML {
 
@@ -22,14 +23,15 @@ class LayersTest : public testing::Test {
 
 TEST_F(LayersTest, TestDenseLayer) {
   auto input_layer = Constant({1., 2., 3., 4.});
-  auto test = Pow(input_layer, Constant({5.}));
-  auto dense_layer = Layers::DenseLayer(test, 3);
+  auto dense_layer = Layers::DenseLayer(input_layer, 3);
   auto second_layer = Layers::DenseLayer(dense_layer, 2);
+  auto labels = Constant({ 1., 2. });
+  auto loss = Losses::MeanSquaredError(labels, second_layer);
   ForwardPropagate(Graph::GetDefaultGraph());
-  auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), dense_layer);
-  //SerializeGraphToDotFile(*back_prop_graph, "/tmp/testbackprop.dot");
+  auto back_prop_graph = CreateBackpropGraph(Graph::GetDefaultGraph(), loss);
+  SerializeGraphToDotFile(*back_prop_graph, "./testbackprop.dot");
   //SerializeGraphToDotFile(Graph::GetDefaultGraph(), "/tmp/testbackprop.dot");
-  ForwardPropagate(*back_prop_graph);
+  //ForwardPropagate(*back_prop_graph);
 }
 
 }  // namespace SimpleML

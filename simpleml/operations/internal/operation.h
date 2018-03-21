@@ -32,6 +32,7 @@ class Operation {
       const VariableNode* gradient) const {
       (void)input;
       (void)gradient;
+      (void)graph;
     assert(false && "Operation is not differentiable.");
     return nullptr;
   }

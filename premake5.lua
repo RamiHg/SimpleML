@@ -2,6 +2,7 @@ workspace "SimpleMLWorkspace"
     configurations {"Debug", "Release"}
     basedir "builddir"
     targetdir "builddir/bin/${cfg.buildcfg}"
+    debugdir "builddir/bin"
     cppdialect "C++17"
 
     objdir "builddir/obj/${cfg.buildcfg}"
@@ -45,7 +46,13 @@ project "gtest"
 project "SimpleML"
     kind "StaticLib"
     language "C++"
-    warnings "Extra"
+    
+    -- warnings "Extra"
+    
+    defines {
+        "_SCL_SECURE_NO_WARNINGS",
+        "_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS",
+    }
 
     files {
         "simpleml/**.h",

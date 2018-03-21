@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 
+#include "xtensor-blas/xlinalg.hpp"
+
 #include "simpleml/back_prop.h"
 #include "simpleml/forward_prop.h"
 #include "simpleml/graph.h"
@@ -18,6 +20,16 @@ class OperationsTest : public testing::Test {
     Graph::GetDefaultGraph().Reset();
   }
 };
+
+TEST_F(OperationsTest, TestXTensor) {
+  {
+    auto a = Tensor{ -1 };
+    auto b = Tensor{ {-58}, {-56} };
+    auto result = b * a;
+    auto expected = Tensor{ {2, 4}, {6, 8} };
+    EXPECT_EQ(result, expected);
+  }
+}
 
 TEST_F(OperationsTest, TestConstant) {
   auto test = Tensor{1., 2., 3.};

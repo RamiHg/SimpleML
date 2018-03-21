@@ -19,14 +19,14 @@ namespace SimpleML {
 namespace Operations {
 
 VariableNode* Add(const VariableNode* lhs, const VariableNode* rhs,
-                  std::string_view name, Graph& graph) {
+   Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "add");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<AddOperation>(lhs, rhs));
 }
 
 VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
-                  std::string_view name, Graph& graph) {
+                 Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "mul");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<MulOperation>(lhs, rhs));
@@ -46,22 +46,22 @@ VariableNode* Transpose(const VariableNode* value, std::string_view name,
                                   std::make_unique<TransposeOperation>(value));
 }
 
-VariableNode* Constant(const Tensor& value, std::string_view name,
-                       Graph& graph) {
+VariableNode* Constant(const Tensor& value,
+                       Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "constant");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<ConstantOperation>(value));
 }
 
 VariableNode* Gte(const VariableNode* lhs, const VariableNode* rhs,
-                  std::string_view name, Graph& graph) {
+                  Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "gte");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<GteOperation>(lhs, rhs));
 }
 VariableNode* Where(const VariableNode* cond, const VariableNode* a,
-                    const VariableNode* b, std::string_view name,
-                    Graph& graph) {
+                    const VariableNode* b,
+                    Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "where");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<WhereOperation>(cond, a, b));

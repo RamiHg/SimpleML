@@ -28,11 +28,11 @@ class ReluOperation : public Operation {
     VariableNode* where_op;
     {
       auto cond = Operations::Gte(
-          x, Operations::Constant({0.}, std::string_view(), graph),
-          std::string_view(), graph);
-      auto a = Operations::Constant({1.}, std::string_view(), graph);
-      auto b = Operations::Constant({0.}, std::string_view(), graph);
-      where_op = Operations::Where(cond, a, b, std::string_view(), graph);
+          x, Operations::Constant({0.}, graph),
+          graph);
+      auto a = Operations::Constant({1.}, graph);
+      auto b = Operations::Constant({0.}, graph);
+      where_op = Operations::Where(cond, a, b, graph);
     }
 
     return std::make_unique<MulOperation>(where_op, gradient);

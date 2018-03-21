@@ -1,11 +1,7 @@
 #pragma once
 
-#pragma warning (push)
-#pragma warning (disable: 4996)
 #include "xtensor/xarray.hpp"
-#include "xtensor-blas/xlinalg.hpp"
 #include "xtensor/xstrided_view.hpp"
-#pragma warning (pop)
 
 namespace SimpleML {
 

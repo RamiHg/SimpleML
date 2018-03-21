@@ -24,10 +24,10 @@ class PowOperation : public Operation {
     assert(input == inputs_[0]);
     // Subtract one from the power (TODO: Implement subtract?)
     VariableNode* new_pow = Operations::Add(inputs_[1],
-      Operations::Constant(Tensor{-1.0}, std::string_view(), graph), std::string_view(), graph);
+      Operations::Constant(Tensor{-1.0}, graph), graph);
     VariableNode* new_base = Operations::Pow(inputs_[0],
       new_pow, graph);
-    VariableNode* result = Operations::Mul(new_base, inputs_[1], std::string_view(), graph);
+    VariableNode* result = Operations::Mul(new_base, inputs_[1], graph);
     return std::make_unique<MulOperation>(result, gradient);
   }
 };
