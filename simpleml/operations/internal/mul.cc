@@ -2,35 +2,12 @@
 
 #include <iostream>
 
+#include "xtensor/xeval.hpp"
+
 namespace SimpleML {
 Tensor MulOperation::Compute() const {
-  const auto lhs = GetInputValue(0);
-  const auto rhs = GetInputValue(1);
-
-  auto lhs_shape = lhs.shape();
-  auto rhs_shape = rhs.shape();
-
-  // For some reason there's a bug in xtensor where the
-  // larger shape has to be on the left hand side
-  // for broadcasting to be correct.
-  
-  std::cout << "First: ";
-  for (auto item : lhs_shape)
-    std::cout << item << " ";
-  std::cout << "\nSecond: ";
-  for (auto item : rhs_shape)
-    std::cout << item << " ";
-  std::cout << std::endl;
-
-  std::cout << "LHS: \n";
-  for (auto item : lhs) {
-    std::cout << item << " ";
-  }
-  std::cout << "\nRHS: \n";
-  for (auto item : rhs) {
-    std::cout << item << " ";
-  }
-  std::cout << std::endl;
+  const Tensor& lhs = GetInputValue(0);
+  const Tensor& rhs = GetInputValue(1);
   return lhs * rhs;
 }
 

@@ -24,8 +24,9 @@ class OperationsTest : public testing::Test {
 TEST_F(OperationsTest, TestXTensor) {
   {
     auto a = Tensor{ -1 };
-    auto b = Tensor{ -58, -56 };
-    auto result = b * a;
+    auto b = Tensor{ -58.0, -56.0 };
+    Shape sh = ShapeFromS(b.shape());
+    auto result = a * a *(a * b);
     auto expected = Tensor{ 58, 56};
     EXPECT_EQ(result, expected);
   }

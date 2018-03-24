@@ -2,6 +2,7 @@
 
 #include "xtensor/xarray.hpp"
 #include "xtensor/xstrided_view.hpp"
+#include "xtensor/xeval.hpp"
 
 namespace SimpleML {
 

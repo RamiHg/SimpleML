@@ -11,7 +11,7 @@
 
 #include <algorithm>
 
-#include "xtl/xsequence.hpp"
+#include <xtl/xsequence.hpp>
 
 #include "xconcepts.hpp"
 #include "xexpression.hpp"
@@ -102,6 +102,7 @@ namespace xt
 
         void run();
 
+        void step(size_type i);
         void step(size_type i, size_type n);
         void reset(size_type i);
 
@@ -243,7 +244,7 @@ namespace xt
         const E2& de2 = e2.derived_cast();
 
         size_type dim = de2.dimension();
-        shape_type shape = xtl::make_sequence<shape_type>(dim, size_type(1));
+        shape_type shape = xtl::make_sequence<shape_type>(dim, size_type(0));
         bool trivial_broadcast = de2.broadcast_shape(shape, true);
 
         if (dim > de1.dimension() || shape > de1.shape())
@@ -276,7 +277,7 @@ namespace xt
         const E1& de1 = e1.derived_cast();
         const E2& de2 = e2.derived_cast();
         size_type size = de2.dimension();
-        shape_type shape = xtl::make_sequence<shape_type>(size, size_type(1));
+        shape_type shape = xtl::make_sequence<shape_type>(size, size_type(0));
         de2.broadcast_shape(shape, true);
         if (shape.size() > de1.shape().size() || shape > de1.shape())
         {
@@ -292,7 +293,7 @@ namespace xt
         using size_type = typename E1::size_type;
         const E2& de2 = e2.derived_cast();
         size_type size = de2.dimension();
-        shape_type shape = xtl::make_sequence<shape_type>(size, size_type(1));
+        shape_type shape = xtl::make_sequence<shape_type>(size, size_type(0));
         bool trivial_broadcast = de2.broadcast_shape(shape, true);
         e1.derived_cast().resize(std::move(shape));
         return trivial_broadcast;
@@ -322,6 +323,13 @@ namespace xt
             *m_lhs = conditional_cast<is_narrowing, result_type>(*m_rhs);
             stepper_tools<L>::increment_stepper(*this, m_index, m_e1.shape());
         }
+    }
+
+    template <class E1, class E2, layout_type L>
+    inline void data_assigner<E1, E2, L>::step(size_type i)
+    {
+        m_lhs.step(i);
+        m_rhs.step(i);
     }
 
     template <class E1, class E2, layout_type L>
