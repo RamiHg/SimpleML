@@ -11,7 +11,7 @@ class TransposeOperation : public Operation {
  public:
   TransposeOperation(const VariableNode* input) : Operation({input}) {}
   virtual const char* GetName() const override { return "Transpose"; }
-  
+
   virtual Shape GetResultShape() const override {
     Shape parent_shape = inputs_[0]->GetOperation().GetResultShape();
     // Simply reverse the dimensions.

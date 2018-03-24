@@ -27,12 +27,16 @@ class VariableNode {
   void SetValue(const Tensor& value) { value_ = value; }
   const Tensor& GetValue() const { return value_; }
   const Operation& GetOperation() const { return *operation_; }
+  
+  bool IsTrainable() const { return trainable_; }
+  void SetTrainable(bool trainable) { trainable_ = trainable; }
 
  private:
   const std::string name_;
   std::unique_ptr<Operation> operation_;
   std::vector<int> shape_;
   Tensor value_;
+  bool trainable_;
 };
 
 }  // namespace SimpleML

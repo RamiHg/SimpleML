@@ -104,16 +104,15 @@ static VariableNode* BuildGradient(
 
   VariableNode* gradient;
   if (partial_gradients.empty()) {
-    gradient = Operations::Constant(
-        Tensor{1.f}, graph, variable->GetName() + "_constant_gradient");
+    gradient = Operations::Constant(Tensor{1.f}, graph,
+                                    variable->GetName() + "_constant_gradient");
   } else {
     gradient = partial_gradients.back();
     partial_gradients.pop_back();
     // TODO: Create a multisum to optimize this.
     for (auto& partial_gradient : partial_gradients) {
       gradient = Operations::Add(
-          gradient, partial_gradient,
-          graph,
+          gradient, partial_gradient, graph,
           gradient->GetName() + std::string("_partial_gradient_sum"));
     }
   }
@@ -123,7 +122,8 @@ static VariableNode* BuildGradient(
 }
 
 std::unique_ptr<Graph> CreateBackpropGraph(const Graph& input_graph,
-                                           VariableNode* input) {
+                                           VariableNode* input,
+                                           std::unordered_map<std::string, VariableNode*>& grad_table) {
   // First, create a copy of the graph.
   std::unique_ptr<Graph> graph = std::make_unique<Graph>(input_graph);
   AdjacencyMap descendant_map = GetNodeDescendants(*graph);
@@ -133,7 +133,7 @@ std::unique_ptr<Graph> CreateBackpropGraph(const Graph& input_graph,
   std::vector<VariableNode*> need_gradients;
   for (const auto& pair : graph->GetNodes()) {
     // Only put nodes that have inputs.
-    if (1 || !pair.second->GetOperation().GetInputs().empty()) {
+    if (pair.second->IsTrainable()) {
       need_gradients.push_back(pair.second.get());
     }
   }
@@ -154,7 +154,7 @@ std::unique_ptr<Graph> CreateBackpropGraph(const Graph& input_graph,
     }
   }
 
-  std::unordered_map<std::string, VariableNode*> grad_table;
+  assert(grad_table.empty());
   grad_table[input->GetName()] = Operations::Constant(
       Tensor{1.f}, *graph, input->GetName() + "_initial_gradient");
 

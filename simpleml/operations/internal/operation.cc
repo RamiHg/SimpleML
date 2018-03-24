@@ -20,13 +20,13 @@ Shape Operation::GetResultShape() const {
   for (const auto input : inputs_) {
     input_shapes.push_back(input->GetOperation().GetResultShape());
   }
-  
+
   // Number of dimensions is set by the largest element.
   size_t final_size = 0;
   for (const auto& shape : input_shapes) {
     final_size = std::max(shape.size(), final_size);
   }
-  
+
   Shape result;
   result.resize(final_size);
   for (size_t i = 0; i < result.size(); ++i) {
@@ -35,18 +35,17 @@ Shape Operation::GetResultShape() const {
     int max_size = 0;
     for (const auto& shape : input_shapes) {
       if (i < shape.size()) {
-        assert(shape[i] != INT32_MAX); // INT32_MAX reserved.
-        const int size = shape[i] == -1? INT32_MAX : shape[i];
+        assert(shape[i] != INT32_MAX);  // INT32_MAX reserved.
+        const int size = shape[i] == -1 ? INT32_MAX : shape[i];
         max_size = std::max(max_size, size);
-      }
-      else {
+      } else {
         // This dimension will get broadcasted.
         max_size = std::max(max_size, -1);
       }
     }
-    result[i] = max_size == INT32_MAX? -1 : max_size;
+    result[i] = max_size == INT32_MAX ? -1 : max_size;
   }
-  
+
   return result;
 }
 }  // namespace SimpleML

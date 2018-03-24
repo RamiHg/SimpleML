@@ -8,6 +8,6 @@ namespace SimpleML {
 
 VariableNode::VariableNode(std::string_view name,
                            std::unique_ptr<Operation> operation)
-    : name_(name), operation_(std::move(operation)) {}
+    : name_(name), operation_(std::move(operation)), trainable_(true) {}
 
 }  // namespace SimpleML

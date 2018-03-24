@@ -7,7 +7,7 @@ class VariableNode;
 
 namespace Losses {
 
-VariableNode* MeanSquaredError(VariableNode* labels, VariableNode* predictions, Graph& graph = Graph::GetDefaultGraph());
-
+VariableNode* MeanSquaredError(VariableNode* labels, VariableNode* predictions,
+                               Graph& graph = Graph::GetDefaultGraph());
 }
-}
+}  // namespace SimpleML

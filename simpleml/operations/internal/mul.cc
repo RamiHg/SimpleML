@@ -17,9 +17,7 @@ std::unique_ptr<Operation> MulOperation::GetBackProp(
   assert(input == inputs_[0] || input == inputs_[1]);
   // AB
   auto other_input = input == inputs_[0] ? inputs_[1] : inputs_[0];
-  return std::make_unique<MulOperation>(
-    other_input,
-    gradient);
+  return std::make_unique<MulOperation>(other_input, gradient);
 }
 
 }  // namespace SimpleML

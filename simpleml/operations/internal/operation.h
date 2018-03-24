@@ -30,9 +30,9 @@ class Operation {
   virtual std::unique_ptr<Operation> GetBackProp(
       Graph& graph, const VariableNode* input,
       const VariableNode* gradient) const {
-      (void)input;
-      (void)gradient;
-      (void)graph;
+    (void)input;
+    (void)gradient;
+    (void)graph;
     assert(false && "Operation is not differentiable.");
     return nullptr;
   }

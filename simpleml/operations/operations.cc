@@ -9,24 +9,24 @@
 #include "simpleml/operations/internal/gte.h"
 #include "simpleml/operations/internal/matmul.h"
 #include "simpleml/operations/internal/mul.h"
+#include "simpleml/operations/internal/pow.h"
 #include "simpleml/operations/internal/relu.h"
 #include "simpleml/operations/internal/transpose.h"
 #include "simpleml/operations/internal/where.h"
-#include "simpleml/operations/internal/pow.h"
 #include "simpleml/variable.h"
 
 namespace SimpleML {
 namespace Operations {
 
 VariableNode* Add(const VariableNode* lhs, const VariableNode* rhs,
-   Graph& graph, std::string_view name) {
+                  Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "add");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<AddOperation>(lhs, rhs));
 }
 
 VariableNode* Mul(const VariableNode* lhs, const VariableNode* rhs,
-                 Graph& graph, std::string_view name) {
+                  Graph& graph, std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "mul");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<MulOperation>(lhs, rhs));
@@ -46,11 +46,13 @@ VariableNode* Transpose(const VariableNode* value, std::string_view name,
                                   std::make_unique<TransposeOperation>(value));
 }
 
-VariableNode* Constant(const Tensor& value,
-                       Graph& graph, std::string_view name) {
+VariableNode* Constant(const Tensor& value, Graph& graph,
+                       std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "constant");
-  return graph.CreateVariableNode(final_name,
+  VariableNode* variable = graph.CreateVariableNode(final_name,
                                   std::make_unique<ConstantOperation>(value));
+             variable->SetTrainable(false);
+             return variable;
 }
 
 VariableNode* Gte(const VariableNode* lhs, const VariableNode* rhs,
@@ -60,8 +62,8 @@ VariableNode* Gte(const VariableNode* lhs, const VariableNode* rhs,
                                   std::make_unique<GteOperation>(lhs, rhs));
 }
 VariableNode* Where(const VariableNode* cond, const VariableNode* a,
-                    const VariableNode* b,
-                    Graph& graph, std::string_view name) {
+                    const VariableNode* b, Graph& graph,
+                    std::string_view name) {
   const std::string final_name = GetUniqueNodeName(graph, name, "where");
   return graph.CreateVariableNode(final_name,
                                   std::make_unique<WhereOperation>(cond, a, b));

@@ -28,11 +28,11 @@ VariableNode* DenseLayer(VariableNode* input, int width, Graph& graph,
   // The bias is of size [width, 1]
   Tensor::shape_type bias_shape = {(uint32_t)width};
   VariableNode* bias =
-      Operations::Constant(Tensor{bias_shape, 0.},graph, final_name + "_bias");
+      Operations::Constant(Tensor{bias_shape, 0.}, graph, final_name + "_bias");
 
   VariableNode* wx =
       Operations::MatMul(weight_matrix, input, final_name + "_matmul", graph);
-  VariableNode* wxb = Operations::Add(wx, bias,  graph, final_name + "_addbias");
+  VariableNode* wxb = Operations::Add(wx, bias, graph, final_name + "_addbias");
   VariableNode* layer_value =
       Operations::ReLU(wxb, final_name + "_relu", graph);
 

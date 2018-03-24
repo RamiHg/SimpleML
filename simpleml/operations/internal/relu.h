@@ -27,9 +27,7 @@ class ReluOperation : public Operation {
     auto x = inputs_[0];
     VariableNode* where_op;
     {
-      auto cond = Operations::Gte(
-          x, Operations::Constant({0.}, graph),
-          graph);
+      auto cond = Operations::Gte(x, Operations::Constant({0.}, graph), graph);
       auto a = Operations::Constant({1.}, graph);
       auto b = Operations::Constant({0.}, graph);
       where_op = Operations::Where(cond, a, b, graph);
